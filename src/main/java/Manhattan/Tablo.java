@@ -3,34 +3,26 @@ package Manhattan;
 import java.util.Arrays;
 
 public class Tablo {
-    static String matrix;
-    static String tmpl = "ABCDEFGHIJKLMNOPQRSTUVWXYZ?";
-
-    int L;
-    int H;
+    String matrix;
+    String tmpl = "ABCDEFGHIJKLMNOPQRSTUVWXYZ?";
+    int L, H;
     int matrixOfset;
-
     char[] in;
     char[] out;
     int outLen;
     int outOfset;
 
-    public Tablo(int L, int H, String inpMatrix) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < inpMatrix.length(); i++) {
-            if (i % (L * 27 - 1) == 0 && i != 0) sb.append(' ');
-            sb.append(inpMatrix.charAt(i));
-        }
-        sb.append(' ');
-        matrix = sb.toString();
-        System.out.println("matrix length = " + matrix.length());
+    Tablo(int L, int H, String inpMatrix) {
         this.L = L;
         this.H = H;
+        this.matrix = inpMatrix;
         matrixOfset = L * 27;
+        // System.err.println(inpMatrix);
     }
 
 
-    public String recode(String toRecode) {
+    public String[] recode(String toRecode) {
+        toRecode = toRecode.toUpperCase();
         in = toRecode.toCharArray();
         out = new char[H * L * in.length];
         outLen = toRecode.length() * L * H;
@@ -43,22 +35,41 @@ public class Tablo {
             }
         }
         toRecode = new String(in);
+        int matrixAdress, outAdress;
+        int x = 0, ym = 0, yo = 0;
+
         for (int l = 0; l < in.length; l++) {
-            int matrixAdress = tmpl.indexOf(toRecode.charAt(l)) * L;
-            int outAdress = l * L;
-            int x = 0, ym = 0, yo=0;
-            for (int i = 0; i < H * L; i++) {
-                if (i % L == 0 && i!=0) {
-                    ym += matrixOfset;
-                    yo += outOfset;
-                    x=0;
+            matrixAdress = tmpl.indexOf(toRecode.charAt(l)) * L;
+            outAdress = l * L;
+
+            for (int i = 0; i < L*H; i++) {
+                for (int j = 0; j < L; j++) {
+                    char r = matrix.charAt(matrixAdress + j);
+                    out[outAdress + j ] = r;
                 }
-                out[outAdress + x + yo] = matrix.charAt(matrixAdress + x + ym);
-                x++;
+                matrixAdress+=matrixOfset;
+                outAdress+=outOfset;
+
+
             }
 
         }
-        return new String(out);
+
+        String[] outar = new String[H];
+        StringBuilder sb = new StringBuilder();
+        int line = 0;
+
+        for (int l = 0; l < out.length; l++) {
+            if (l != 0 && l % outOfset == 0) {
+                outar[line] = sb.toString();
+                sb.setLength(0);
+                line++;
+            }
+            sb.append(out[l]);
+        }
+        outar[line] = sb.toString();
+
+        return outar;
     }
 
     public String getMatrix() {

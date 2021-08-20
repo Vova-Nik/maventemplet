@@ -11,13 +11,13 @@ public class Tablo {
     char[] out;
     int outLen;
     int outOfset;
+    int matrixAdress, outAdress;
 
     Tablo(int L, int H, String inpMatrix) {
         this.L = L;
         this.H = H;
         this.matrix = inpMatrix;
         matrixOfset = L * 27;
-        // System.err.println(inpMatrix);
     }
 
 
@@ -35,25 +35,19 @@ public class Tablo {
             }
         }
         toRecode = new String(in);
-        int matrixAdress, outAdress;
-        int x = 0, ym = 0, yo = 0;
 
-        for (int l = 0; l < in.length; l++) {
-            matrixAdress = tmpl.indexOf(toRecode.charAt(l)) * L;
-            outAdress = l * L;
-
-            for (int i = 0; i < L*H; i++) {
-                for (int j = 0; j < L; j++) {
-                    char r = matrix.charAt(matrixAdress + j);
-                    out[outAdress + j ] = r;
+            for (int l = 0; l < in.length; l++) {
+                matrixAdress = tmpl.indexOf(toRecode.charAt(l)) * L;
+                outAdress = l * L;
+                for (int i = 0; i < H; i++) {
+                    for (int j = 0; j < L; j++) {
+                        char r = matrix.charAt(matrixAdress + i * matrixOfset + j);
+                        out[outAdress + i * outOfset + j] = r;
+                    }
                 }
-                matrixAdress+=matrixOfset;
-                outAdress+=outOfset;
-
-
+                matrixAdress += matrixOfset;
+                outAdress += outOfset;
             }
-
-        }
 
         String[] outar = new String[H];
         StringBuilder sb = new StringBuilder();

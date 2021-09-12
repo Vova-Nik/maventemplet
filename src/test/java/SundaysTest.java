@@ -8,4 +8,10 @@ class SundaysTest {
     Sundays sun = new Sundays();
     System.out.println(sun.calculate());
 }
+
+    @Test
+    void vvv(){
+        Sundays sun = new Sundays();
+        System.out.println(sun.calculate());
+    }
 }

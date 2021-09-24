@@ -29,13 +29,15 @@ class ComplFutureTest {
     }
 
 
-    public void printThread() {
+    public String printThread() {
         try {
             Thread.sleep(10);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println(Thread.currentThread().getName());
+        String s = Thread.currentThread().getName();
+        System.out.println(s);
+        return s;
     }
 
     public String getThread() {
@@ -64,7 +66,11 @@ class ComplFutureTest {
         for (int i = 0; i < 8; i++) {
             System.out.println("Executed " + i);
             //            es.execute(() -> { System.out.println(Thread.currentThread().getName()); });
-            CompletableFuture<String> cf = (CompletableFuture)es.submit(this::printThread);
+
+                CompletableFuture<String> cf = (CompletableFuture) es.submit(this::printThread);
+
+
+
         }
         es.shutdown();
     }

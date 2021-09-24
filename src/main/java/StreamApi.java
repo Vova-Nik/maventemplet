@@ -23,14 +23,14 @@ public class StreamApi {
         str.chars()
                 .map(s->{
                     System.out.println("map " +s);
-//                    char sch = Character.forDigit(s,10);
+                    char sch = Character.forDigit(s,10);
                     return Character.toUpperCase(s);
                 })
-                .peek(s-> System.out.println("upercased " + s))
-                .filter(s -> {
-                    System.out.println("Filter " + s);
-                    return true;
-                })
+//                .peek(s-> System.out.println("upercased " + s))
+//                .filter(s -> {
+//                    System.out.println("Filter " + s);
+//                    return true;
+//                })
                 .forEach(s-> System.out.println("foreach " +(char)s));
     }
 
@@ -46,7 +46,8 @@ public class StreamApi {
 
     public static void main(String[] args) {
         StreamApi sa = new StreamApi();
-        sa.sortier();
+//        sa.sortier();
+        sa.streamOfch();
     }
 }
 

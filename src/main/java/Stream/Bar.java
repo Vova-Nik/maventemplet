@@ -10,5 +10,4 @@ public class Bar {
     Bar(String name){
         this.name=name;
     }
-
 }

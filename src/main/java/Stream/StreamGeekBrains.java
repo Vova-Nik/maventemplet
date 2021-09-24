@@ -19,6 +19,4 @@ public class StreamGeekBrains {
                 .forEach (i->f.bars.add(new Bar("Bar" + i + " <- " + f.getName()))));
         foos.stream().flatMap(f->f.bars.stream()).forEach(System.out::println);
     }
-
-
 }
